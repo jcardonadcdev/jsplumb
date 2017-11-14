@@ -13,10 +13,23 @@
  * Dual licensed under the MIT and GPL2 licenses.
  */
 ;
-(function () {
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(["./overlay-component"], factory);
+  } else if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory();
+  } else {
+    // Browser globals (root is window)
+    factory();
+  }
+}(this, function () {
 
     "use strict";
-    var root = this,
+  var root = typeof window !== 'undefined' ? window : this,
         _jp = root.jsPlumb,
         _ju = root.jsPlumbUtil;
 
@@ -621,4 +634,4 @@
         }
 
     }); // END Connection class            
-}).call(typeof window !== 'undefined' ? window : this);
+}));

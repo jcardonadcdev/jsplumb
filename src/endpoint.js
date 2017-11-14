@@ -12,10 +12,23 @@
  * 
  * Dual licensed under the MIT and GPL2 licenses.
  */
-(function () {
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(["./overlay-component"], factory);
+  } else if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory();
+  } else {
+    // Browser globals (root is window)
+    factory();
+  }
+}(this, function () {
 
     "use strict";
-    var root = this, _jp = root.jsPlumb, _ju = root.jsPlumbUtil;
+  var root = typeof window !== 'undefined' ? window : this, _jp = root.jsPlumb, _ju = root.jsPlumbUtil;
 
     // create the drag handler for a connection
     var _makeConnectionDragHandler = function (endpoint, placeholder, _jsPlumb) {
@@ -1278,4 +1291,4 @@
             _jsPlumb.currentlyDragging = false;
         };
     };
-}).call(typeof window !== 'undefined' ? window : this);
+}));

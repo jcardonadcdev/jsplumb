@@ -13,12 +13,25 @@
  * Dual licensed under the MIT and GPL2 licenses.
  */
 ;
-(function () {
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define([], factory);
+  } else if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory();
+  } else {
+    // Browser globals (root is window)
+    factory();
+  }
+}(this, function () {
 
 // ************************** SVG utility methods ********************************************	
 
     "use strict";
-    var root = this, _jp = root.jsPlumb, _ju = root.jsPlumbUtil;
+  var root = typeof window !== 'undefined' ? window : this, _jp = root.jsPlumb, _ju = root.jsPlumbUtil;
 
     var svgAttributeMap = {
             "stroke-linejoin": "stroke-linejoin",
@@ -629,4 +642,4 @@
         };
     };
     _ju.extend(_jp.Overlays.svg.GuideLines, _jp.Overlays.GuideLines);
-}).call(typeof window !== 'undefined' ? window : this);
+}));
